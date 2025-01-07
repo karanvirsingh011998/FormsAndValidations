@@ -1,130 +1,121 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { userSchema } from './lib/schema';
-import { FormInput } from './components/FormInput';
-import { CheckCircle2, AlertCircle } from 'lucide-react';
-
-type FormData = z.infer<typeof userSchema>;
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { FormikExample } from './pages/FormikExample';
+import { RHFZodExample } from './pages/RHFZodExample';
+import { RHFYupExample } from './pages/RHFYupExample';
 
 function App() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
-    reset,
-  } = useForm<FormData>({
-    resolver: zodResolver(userSchema),
-    defaultValues: {
-      // age: undefined,
-      // terms: false,
-    },
-  });
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/formik-example" element={<FormikExample />} />
+        <Route path="/rhf-zod-example" element={<RHFZodExample />} />
+        <Route path="/rhf-yup-example" element={<RHFYupExample />} />
+      </Routes>
+    </Router>
+  );
+}
 
-  const onSubmit = async (data: FormData) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
-    reset();
-  };
-
+const HomePage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-8">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">Create Account</h2>
-          <p className="mt-2 text-gray-600">Join our community today</p>
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Form Validation Examples
+          </h1>
+          <p className="text-xl text-gray-600">
+            Explore different form validation libraries and techniques
+          </p>
         </div>
 
-        {isSubmitSuccessful && (
-          <div className="mb-6 p-4 bg-green-50 rounded-lg flex items-center gap-2 text-green-700">
-            <CheckCircle2 className="h-5 w-5" />
-            <span>Registration successful!</span>
+        <div className="mb-12 bg-white rounded-xl shadow-lg p-6">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+            About the Libraries
+          </h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-medium text-gray-900">Formik</h3>
+              <p className="text-gray-600">
+                Formik is a popular form library that helps with form state management, validation, and submission. 
+                When paired with Yup, it provides a powerful and intuitive way to handle form validations.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-medium text-gray-900">React Hook Form</h3>
+              <p className="text-gray-600">
+                React Hook Form is a performant, flexible and extensible form library with easy-to-use validation. 
+                It reduces the amount of code you need to write while removing unnecessary re-renders.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-medium text-gray-900">Validation Libraries</h3>
+              <div className="ml-4 space-y-2 mt-2">
+                <p className="text-gray-600">
+                  <span className="font-medium">Yup:</span> A schema builder for runtime value parsing and validation. 
+                  Integrates well with both Formik and React Hook Form.
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-medium">Zod:</span> TypeScript-first schema validation with static type inference. 
+                  Provides excellent type safety and runtime validation.
+                </p>
+              </div>
+            </div>
           </div>
-        )}
+        </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
-            <FormInput
-              label="First Name"
-              name="firstName"
-              register={register}
-              error={errors.firstName}
-              placeholder="John"
-            />
-            <FormInput
-              label="Last Name"
-              name="lastName"
-              register={register}
-              error={errors.lastName}
-              placeholder="Doe"
-            />
-          </div>
-
-          <FormInput
-            label="Email"
-            name="email"
-            type="email"
-            register={register}
-            error={errors.email}
-            placeholder="you@example.com"
-          />
-
-          <FormInput
-            label="Password"
-            name="password"
-            type="password"
-            register={register}
-            error={errors.password}
-          />
-
-          <FormInput
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-            register={register}
-            error={errors.confirmPassword}
-          />
-
-          {/* <FormInput
-            label="Age"
-            name="age"
-            type="number"
-            register={register}
-            error={errors.age}
-          /> */}
-
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              {...register('terms')}
-              id="terms"
-              className="h-4 w-4 text-blue-600 rounded border-gray-300"
-            />
-            <label htmlFor="terms" className="text-sm text-gray-600">
-              I accept the terms and conditions
-            </label>
-          </div>
-          {errors.terms && (
-            <p className="text-sm text-red-600 mt-1">{errors.terms.message}</p>
-          )}
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <Link 
+            to="/formik-example"
+            className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
           >
-            {isSubmitting ? 'Creating account...' : 'Create Account'}
-          </button>
-        </form>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">
+              Formik + Yup
+            </h2>
+            <p className="text-gray-600 mb-4">
+              Form validation using Formik with Yup schema
+            </p>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Built-in form state management</li>
+              <li>• Easy form validation</li>
+              <li>• Intuitive error handling</li>
+            </ul>
+          </Link>
 
-        {Object.keys(errors).length > 0 && (
-          <div className="mt-4 p-4 bg-red-50 rounded-lg flex items-center gap-2 text-red-700">
-            <AlertCircle className="h-5 w-5" />
-            <span>Please fix the errors above</span>
-          </div>
-        )}
+          <Link 
+            to="/rhf-zod-example"
+            className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
+          >
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">
+              React Hook Form + Zod
+            </h2>
+            <p className="text-gray-600 mb-4">
+              Form validation using React Hook Form with Zod schema
+            </p>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• TypeScript-first validation</li>
+              <li>• Excellent type inference</li>
+              <li>• High performance</li>
+            </ul>
+          </Link>
+
+          <Link 
+            to="/rhf-yup-example"
+            className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
+          >
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">
+              React Hook Form + Yup
+            </h2>
+            <p className="text-gray-600 mb-4">
+              Form validation using React Hook Form with Yup schema
+            </p>
+            <ul className="text-sm text-gray-600 space-y-1">
+              <li>• Minimal re-renders</li>
+              <li>• Flexible validation</li>
+              <li>• Easy integration</li>
+            </ul>
+          </Link>
+        </div>
       </div>
     </div>
   );
