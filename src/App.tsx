@@ -5,14 +5,12 @@ import { RHFYupExample } from './pages/RHFYupExample';
 
 function App() {
   return (
-    <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/formik-example" element={<FormikExample />} />
         <Route path="/rhf-zod-example" element={<RHFZodExample />} />
         <Route path="/rhf-yup-example" element={<RHFYupExample />} />
       </Routes>
-    </Router>
   );
 }
 

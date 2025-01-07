@@ -1,5 +1,5 @@
 {
-  "homepage": "https://karanvirsingh011998.github.io/FormsAndValidations",
+  "homepage": "https://karanvirsingh011998.github.io/FormsAndValidations/",
   "name": "form-and-validations-react",
   "private": true,
   "version": "0.0.0",
@@ -9,7 +9,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "preview": "vite preview"
   },
   "dependencies": {
