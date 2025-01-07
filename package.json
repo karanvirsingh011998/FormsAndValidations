@@ -1,5 +1,6 @@
 {
-  "name": "react-hook-form-with-zod",
+  "homepage": "https://karanvirsingh011998.github.io/FormsAndValidations",
+  "name": "form-and-validations-react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
