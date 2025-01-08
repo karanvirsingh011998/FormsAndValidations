@@ -1,5 +1,7 @@
 # formValidationwithZod
 
+# Live Link: https://karanvirsingh011998.github.io/FormsAndValidations/
+
 Clone the repository:
 git clone https://github.com/karanvirsingh011998/formValidationwithZod.git
 
